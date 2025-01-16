@@ -1,0 +1,54 @@
+cxx = g++
+cflag = -Wall -std=c++11 -g
+src = $(wildcard*.cpp)
+obj = $(src:.cpp=.o)
+lib_name = libname.a
+main_obj = main.o
+################## static library  ######################
+ 
+ $(exe): $(main_obj) $(lib_name)
+    $(cxx)$(cflag) -o $@ -L. -lname
+ %.o: %.cpp
+    $(cxx)$(cflag) -c $< -o $@
+ $(lib_name): $(obj)
+    ar rcs $@ $^
+clean:
+    rm -rf *.o
+################# dynamic library #################################
+# Compiler and flags
+cxx = g++
+cxxflags = -Wall -g -fPIC -std=c++11
+
+# Source files
+source = $(wildcard *.cpp)
+
+# Object files
+obj = $(filter-out reversesentence.o, $(source:.cpp=.o)) # Exclude main file
+main_obj = reversesentence.o
+
+# Target executable
+target = myprogram
+
+# Library details
+lib_name = libmylibrary.so  # Name of the dynamic library
+
+# Rule to run the program after compiling
+run: $(target)
+	./$(target)    
+
+# Rule to create the executable
+$(target): $(main_obj) $(lib_name)
+	$(cxx) $(main_obj) -L. -lmylibrary -o $@
+
+# Rule to create the dynamic library
+$(lib_name): $(obj)
+	$(cxx) $(cxxflags) -shared -o $@ $^
+
+# Rule to compile .cpp to .o
+%.o: %.cpp
+	$(cxx) $(cxxflags) -c $< -o $@
+
+# Clean up object files, library, and executable
+clean:
+	rm -f $(obj) $(main_obj) $(lib_name) $(target)
+
