@@ -4,6 +4,7 @@ void checknew()
 {
     try{
     int * ptr = new int [1000000000000];
+        //int * ptr = new (std::nothrow) int [1000000000000];
     //ptr[0]=9;
     //std::cout<<ptr[0];
      if(ptr!=nullptr)
