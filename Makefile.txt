@@ -52,3 +52,19 @@ $(lib_name): $(obj)
 clean:
 	rm -f $(obj) $(main_obj) $(lib_name) $(target)
 
+############## Program Makefile using code 
+CXX = g++
+CXXFLAG = -Wall -std=c++11 -g   # -I./include
+SRC = $(wildcard *.cpp)
+OBJ = $(SRC:.cpp=.o)
+target = first
+
+run:$(target)
+	./$(target)
+$(target):$(OBJ)
+	$(CXX) $^ -o $@
+%.O:%.cpp
+	$(CXX) $(CXXFLAG) -c $< -o $@
+
+clean:
+	del *.O $(target) $(obj) 
