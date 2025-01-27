@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAG = -Wall -std=c++11 -g
 SRC = $(wildcard *.cpp)
 OBJ = $(SRC:.cpp=.o)
-target = first
+target = myprog
 
 run:$(target)
 	./$(target)
